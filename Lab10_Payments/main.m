@@ -6,10 +6,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PaymentGateway.h"
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
        
+        PaymentGateway *paymentGateway = [[PaymentGateway alloc] init];
+        
         NSInteger randomDollarValue = arc4random_uniform(900) + 100;
         NSLog(@"%ld", (long)randomDollarValue);
         
@@ -19,6 +22,10 @@ int main(int argc, const char * argv[]) {
         fgets(input, 256, stdin);
         NSString *userInput = [NSString stringWithCString:input encoding:NSUTF8StringEncoding];
         NSLog(@"%@", userInput);
+        
+        [paymentGateway processPaymentAmount:randomDollarValue];
+        
+        
     }
     return 0;
 }
