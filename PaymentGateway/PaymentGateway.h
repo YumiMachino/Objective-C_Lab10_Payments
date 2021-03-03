@@ -11,23 +11,28 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Define protocol
 @protocol PaymentDelegate <NSObject>
-
 /// delegate method
 @required
 - (void) processPaymentAmount: (NSInteger) number;
-
 @end
 
+
+@protocol CanProcessPayment <NSObject>
+
+- (BOOL) canProcessPayment;
+
+@end
 
 
 @interface PaymentGateway : NSObject
 
 /// create a delegate property to refer to delegate object
-@property (nonatomic) id<PaymentDelegate> delegate;
-
+@property (nonatomic) id<PaymentDelegate, CanProcessPayment> delegate;
 
 /// delegate method
-- (void) processPaymentAmount: (NSInteger) number;
+- (void) processPayment: (NSInteger) number;
+
+
 
 @end
 

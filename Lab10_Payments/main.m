@@ -7,23 +7,48 @@
 
 #import <Foundation/Foundation.h>
 #import "PaymentGateway.h"
+#import "PaypalPaymentService.h"
+#import "StripePaymentService.h"
+#import "AmazonPaymentService.h"
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-       
+        
         PaymentGateway *paymentGateway = [[PaymentGateway alloc] init];
         
         NSInteger randomDollarValue = arc4random_uniform(900) + 100;
-        NSLog(@"%ld", (long)randomDollarValue);
-        
-        NSLog(@"\nThank you for shopping at Acme.com. Your total today is $%ld.\nPlease select your payment method: \n1: Paypal, \n2: Stripe, \n3: Amazon", (long)randomDollarValue);
-       
+
+        NSLog(@"-------------------------------------------------------------");
+        NSLog(@"Thank you for shopping at @Acme.com. Your total today is $%ld.",(long)randomDollarValue);
+        NSLog(@"Please select your payment method:");
+        NSLog(@"1: Paypal  2: Stripe  3: Amazon");
         char input[256];
         fgets(input, 256, stdin);
-        NSString *userInput = [NSString stringWithCString:input encoding:NSUTF8StringEncoding];
-        NSLog(@"%@", userInput);
+        NSString *userInput = [[NSString stringWithCString:input encoding:NSUTF8StringEncoding] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+        NSInteger userInputInInt = [userInput intValue];
         
-        [paymentGateway processPaymentAmount:randomDollarValue];
+        switch (userInputInInt) {
+            case 1:{
+                PaypalPaymentService *paypal = [[PaypalPaymentService alloc] init];
+                paymentGateway.delegate = paypal;
+                [paymentGateway processPayment:randomDollarValue];
+                break;
+            }
+            case 2:{
+                StripePaymentService *stripe = [[StripePaymentService alloc] init];
+                paymentGateway.delegate = stripe;
+                [paymentGateway processPayment:randomDollarValue];
+                break;
+            }
+            case 3:{
+                AmazonPaymentService *amazon = [[AmazonPaymentService alloc] init];
+                paymentGateway.delegate = amazon;
+                [paymentGateway processPayment:randomDollarValue];
+                break;
+            }
+        }
+        
         
         
     }

@@ -10,11 +10,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AmazonPaymentService : NSObject<PaymentDelegate>
+@interface AmazonPaymentService : NSObject<PaymentDelegate, CanProcessPayment>
 
 - (void)processPaymentAmount:(NSInteger)number;
-
-
+- (BOOL) canProcessPayment;
 @end
 
 NS_ASSUME_NONNULL_END

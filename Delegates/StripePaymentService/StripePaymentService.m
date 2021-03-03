@@ -10,7 +10,18 @@
 @implementation StripePaymentService
 
 - (void)processPaymentAmount:(NSInteger)number {
-    NSLog(@"Stripe pay");
+    NSLog(@"Stripe processed amount $%ld", (long)number);
 }
+
+- (BOOL) canProcessPayment {
+    NSInteger number = arc4random_uniform(2);
+    if (number == 1) {
+        return TRUE;
+    } else {
+        return FALSE;
+    }
+}
+
+
 
 @end

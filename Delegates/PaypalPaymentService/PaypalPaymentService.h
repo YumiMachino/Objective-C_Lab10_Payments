@@ -10,9 +10,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface PaypalPaymentService : NSObject <PaymentDelegate>
+@interface PaypalPaymentService : NSObject <PaymentDelegate, CanProcessPayment>
 
 - (void)processPaymentAmount:(NSInteger)number;
+- (BOOL) canProcessPayment;
 
 @end
 

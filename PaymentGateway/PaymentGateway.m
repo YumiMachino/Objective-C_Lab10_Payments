@@ -11,8 +11,21 @@
 
 
 
-- (void) processPaymentAmount: (NSInteger) number {
+
+- (void) processPayment: (NSInteger) number {
+    if ([self.delegate canProcessPayment]) {
+        [self.delegate processPaymentAmount: (NSInteger) number];
+    } else
+        NSLog(@"Sorry, your payment cannot not be processed.");
     
+
+    
+    
+}
+
+
+- (BOOL) canProcessPayment {
+    return TRUE;
 }
 
 @end
