@@ -9,8 +9,16 @@
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        // insert code here...
-        NSLog(@"Hello, World!");
+       
+        NSInteger randomDollarValue = arc4random_uniform(900) + 100;
+        NSLog(@"%ld", (long)randomDollarValue);
+        
+        NSLog(@"\nThank you for shopping at Acme.com. Your total today is $%ld.\nPlease select your payment method: \n1: Paypal, \n2: Stripe, \n3: Amazon", (long)randomDollarValue);
+       
+        char input[256];
+        fgets(input, 256, stdin);
+        NSString *userInput = [NSString stringWithCString:input encoding:NSUTF8StringEncoding];
+        NSLog(@"%@", userInput);
     }
     return 0;
 }
